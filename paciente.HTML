@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Paciente</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="topbar">
+    <div>👤 Sistema Médico</div>
+    <a href="painel.html">← Voltar</a>
+</div>
+
+<div class="container">
+
+    <h1>Dados do Paciente</h1>
+
+    <p>Preencha suas informações</p>
+
+    <input type="text" id="nome" placeholder="Nome completo">
+    <input type="number" id="idade" placeholder="Idade">
+    <input type="text" id="cpf" placeholder="CPF">
+    <input type="email" id="email" placeholder="Email">
+    <input type="text" id="telefone" placeholder="Telefone com DDD (ex: 81999999999)">
+
+    <button onclick="salvar()">Salvar Dados</button>
+
+    <div class="card">
+        <h3>📌 Dados salvos</h3>
+        <p id="resultado">Nenhum dado salvo ainda</p>
+    </div>
+
+</div>
+
+<script>
+function salvar(){
+
+    const dados = {
+        nome: document.getElementById("nome").value,
+        idade: document.getElementById("idade").value,
+        cpf: document.getElementById("cpf").value,
+        email: document.getElementById("email").value,
+        telefone: document.getElementById("telefone").value
+    };
+
+    // salva tudo como JSON
+    localStorage.setItem("paciente", JSON.stringify(dados));
+
+    mostrarDados();
+
+    alert("Dados salvos com sucesso!");
+}
+
+function mostrarDados(){
+
+    const dadosSalvos = localStorage.getItem("paciente");
+
+    if(!dadosSalvos){
+        return;
+    }
+
+    const dados = JSON.parse(dadosSalvos);
+
+    document.getElementById("resultado").innerHTML = `
+        Nome: ${dados.nome} <br>
+        Idade: ${dados.idade} <br>
+        CPF: ${dados.cpf} <br>
+        Email: ${dados.email} <br>
+        Telefone: ${dados.telefone}
+    `;
+
+    // também preenche os inputs automaticamente
+    document.getElementById("nome").value = dados.nome || "";
+    document.getElementById("idade").value = dados.idade || "";
+    document.getElementById("cpf").value = dados.cpf || "";
+    document.getElementById("email").value = dados.email || "";
+    document.getElementById("telefone").value = dados.telefone || "";
+}
+
+// carrega ao abrir a página
+window.onload = mostrarDados;
+</script>
+
+</body>
+</html>

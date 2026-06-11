@@ -1,0 +1,280 @@
+<style>
+.topbar{
+    background:#4da6ff;
+    color:white;
+    padding:15px 25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+/* ===== RESET ===== */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* ===== FUNDO GLOBAL ===== */
+body{
+    background: linear-gradient(135deg, #cfefff, #ffffff);
+    min-height:100vh;
+    color:#333;
+}
+
+/* ===== CONTAINER PADRÃO ===== */
+.container{
+    max-width:900px;
+    margin:40px auto;
+    background: rgba(255,255,255,0.9);
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.1);
+    backdrop-filter: blur(10px);
+}
+
+/* ===== TÍTULOS ===== */
+h1{
+    color:#4da6ff;
+    margin-bottom:20px;
+    font-size:28px;
+}
+
+p{
+    color:#666;
+}
+
+/* ===== INPUTS ===== */
+input{
+    width:100%;
+    padding:14px;
+    margin:10px 0;
+    border:2px solid #e3f2ff;
+    border-radius:12px;
+    outline:none;
+    transition:0.3s;
+    font-size:14px;
+    background:white;
+}
+
+input:focus{
+    border-color:#4da6ff;
+    box-shadow:0 0 8px rgba(77,166,255,0.3);
+}
+
+/* ===== BOTÕES ===== */
+button{
+    width:100%;
+    padding:14px;
+    background: linear-gradient(135deg, #4da6ff, #2f8de0);
+    color:white;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:bold;
+    font-size:15px;
+    transition:0.3s;
+    margin-top:10px;
+}
+
+button:hover{
+    transform: translateY(-2px);
+    box-shadow:0 8px 15px rgba(77,166,255,0.3);
+}
+
+/* ===== CARDS ===== */
+.card{
+    background: #f5fbff;
+    padding:15px;
+    margin-top:12px;
+    border-radius:14px;
+    border-left:5px solid #4da6ff;
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:scale(1.02);
+}
+
+/* ===== TOPO (HEADER) ===== */
+.topbar{
+    background: linear-gradient(135deg, #4da6ff, #2f8de0);
+    color:white;
+    padding:15px 25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-weight:bold;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+.card-link{
+    display:block;
+    padding:20px;
+    background:white;
+    border-radius:15px;
+    text-decoration:none;
+    color:#333;
+    font-weight:bold;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    margin:10px 0;
+    transition:0.3s;
+}
+
+.card-link:hover{
+    transform:scale(1.03);
+    background:#eaf4ff;
+}
+.topbar a{
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+    background: rgba(255,255,255,0.2);
+    padding:6px 12px;
+    border-radius:8px;
+    transition:0.3s;
+}
+
+.topbar a:hover{
+    background:white;
+    color:#4da6ff;
+}
+
+/* ===== ANIMAÇÃO SUAVE ===== */
+.container, .card{
+    animation: fadeIn 0.4s ease-in;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform: translateY(10px);
+    }
+    to{
+        opacity:1;
+        transform: translateY(0);
+    }
+}
+    .logo{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.logo-img{
+    width:280px;
+    height:auto;
+    display:block;
+    margin:0 auto 20px;
+}
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: Arial, sans-serif;
+}
+
+body{
+    background: linear-gradient(135deg, #cfefff, #ffffff);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+
+.container{
+    background:white;
+    width:500px;
+    padding:45px;
+    border-radius:20px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.15);
+}
+
+.logo{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.logo h1{
+    color:#4da6ff;
+    font-size:32px;
+}
+
+.logo p{
+    color:#777;
+    margin-top:5px;
+}
+
+.formulario{
+    display:none;
+}
+
+.formulario.ativo{
+    display:block;
+}
+
+.input-group{
+    margin-bottom:15px;
+}
+
+.input-group label{
+    display:block;
+    margin-bottom:5px;
+    color:#555;
+}
+
+.input-group input{
+    width:100%;
+    padding:12px;
+    border:2px solid #d9ecff;
+    border-radius:10px;
+    outline:none;
+    transition:0.3s;
+}
+
+.input-group input:focus{
+    border-color:#4da6ff;
+}
+
+.senha-box{
+    position:relative;
+}
+
+.senha-box button{
+    position:absolute;
+    right:10px;
+    top:50%;
+    transform:translateY(-50%);
+    border:none;
+    background:none;
+    cursor:pointer;
+    color:#4da6ff;
+    font-weight:bold;
+}
+
+.btn{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#4da6ff;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.btn:hover{
+    background:#3399ff;
+}
+
+.link{
+    text-align:center;
+    margin-top:15px;
+}
+
+.link a{
+    color:#4da6ff;
+    text-decoration:none;
+    font-weight:bold;
+}
+</style>

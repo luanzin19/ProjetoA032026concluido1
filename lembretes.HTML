@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Lembretes</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="topbar">
+    <div>⏰ Sistema Médico</div>
+    <a href="painel.html">← Voltar</a>
+</div>
+
+<div class="container">
+
+    <h1>Lembretes</h1>
+
+    <p>Crie e gerencie seus lembretes</p>
+
+    <input type="text" id="texto" placeholder="Digite o lembrete">
+    <input type="date" id="data">
+    <input type="time" id="hora">
+
+    <button onclick="adicionar()">Salvar Lembrete</button>
+
+    <div id="lista"></div>
+
+</div>
+
+<script>
+let lembretes = JSON.parse(localStorage.getItem("lembretes")) || [];
+
+function salvar(){
+    localStorage.setItem("lembretes", JSON.stringify(lembretes));
+}
+
+function adicionar(){
+
+    const texto = document.getElementById("texto").value;
+    const data = document.getElementById("data").value;
+    const hora = document.getElementById("hora").value;
+
+    if(!texto){
+        alert("Digite um lembrete!");
+        return;
+    }
+
+    const novo = {
+        id: Date.now(),
+        texto,
+        data,
+        hora
+    };
+
+    salvarHistorico("lembretes", "criado", novo);
+
+    lembretes.push(novo);
+    salvar();
+    render();
+
+    document.getElementById("texto").value = "";
+    document.getElementById("data").value = "";
+    document.getElementById("hora").value = "";
+}
+
+function deletar(id){
+
+    let l = lembretes.find(x => x.id === id);
+
+    if(l){
+        salvarHistorico("lembretes", "excluido", l);
+    }
+
+    lembretes = lembretes.filter(x => x.id !== id);
+    salvar();
+    render();
+}
+function render(){
+
+    const lista = document.getElementById("lista");
+    lista.innerHTML = "";
+
+    if(lembretes.length === 0){
+        lista.innerHTML = "<div class='card'>Nenhum lembrete cadastrado</div>";
+        return;
+    }
+
+    lembretes.forEach(l => {
+
+        lista.innerHTML += `
+            <div class="card">
+                <strong>${l.texto}</strong><br>
+                📅 ${l.data || "sem data"} ⏰ ${l.hora || "sem hora"}<br><br>
+                <button onclick="deletar(${l.id})" style="
+                    background:red;
+                    width:100%;
+                    padding:8px;
+                    border:none;
+                    color:white;
+                    border-radius:8px;
+                    cursor:pointer;
+                ">
+                    Excluir
+                </button>
+            </div>
+        `;
+    });
+}
+
+render();
+function salvarHistorico(tipo, acao, dados){
+
+    let chave = "historico_" + tipo;
+
+    let historico = JSON.parse(localStorage.getItem(chave)) || [];
+
+    historico.push({
+        id: Date.now(),
+        acao: acao,
+        dados: dados,
+        data: new Date().toLocaleString()
+    });
+
+    localStorage.setItem(chave, JSON.stringify(historico));
+}
+</script>
+
+</body>
+</html>

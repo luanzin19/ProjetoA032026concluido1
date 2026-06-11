@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="logo">
+        <img src="proj.png" class="logo-img">
+    </div>
+
+    <!-- LOGIN -->
+    <div class="formulario ativo" id="login">
+
+        <div class="input-group">
+            <label>Usuário</label>
+            <input type="text" id="usuarioLogin" placeholder="Digite seu usuário">
+        </div>
+
+        <div class="input-group">
+            <label>Senha</label>
+
+            <div class="senha-box">
+                <input type="password" id="senhaLogin" placeholder="Digite sua senha">
+                <button type="button" onclick="mostrarSenha('senhaLogin', this)">Ver</button>
+            </div>
+        </div>
+
+        <button class="btn" onclick="login()">Entrar</button>
+
+        <div class="link">
+            Não possui conta?
+            <a href="#" onclick="trocarFormulario()">Cadastre-se</a>
+        </div>
+
+    </div>
+
+    <!-- CADASTRO -->
+    <div class="formulario" id="cadastro">
+
+        <div class="input-group">
+            <label>Nome</label>
+            <input type="text" id="nomeCadastro" placeholder="Seu nome">
+        </div>
+
+        <div class="input-group">
+            <label>Email</label>
+            <input type="email" id="emailCadastro" placeholder="Digite seu email">
+        </div>
+
+        <div class="input-group">
+            <label>Usuário</label>
+            <input type="text" id="usuarioCadastro" placeholder="Crie um usuário">
+        </div>
+
+        <div class="input-group">
+            <label>Senha</label>
+
+            <div class="senha-box">
+                <input type="password" id="senhaCadastro" placeholder="Crie uma senha">
+                <button type="button" onclick="mostrarSenha('senhaCadastro', this)">Ver</button>
+            </div>
+        </div>
+
+        <button class="btn" onclick="cadastrar()">Cadastrar</button>
+
+        <div class="link">
+            Já possui conta?
+            <a href="#" onclick="trocarFormulario()">Fazer Login</a>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+// ===== LOGIN =====
+async function login(){
+
+    const usuario = document.getElementById("usuarioLogin").value;
+    const senha = document.getElementById("senhaLogin").value;
+
+    try {
+        const resposta = await fetch("http://127.0.0.1:5000/login", {
+            method: "POST",
+            headers: {
+                "Content-Type":"application/json"
+            },
+            body: JSON.stringify({ usuario, senha })
+        });
+
+        const dados = await resposta.json();
+
+        if(dados.sucesso){
+            localStorage.setItem("usuario", JSON.stringify({
+                usuario: usuario
+            }));
+
+            window.location.href = "painel.html";
+        } else {
+            alert("Usuário ou senha incorretos!");
+        }
+
+    } catch (erro) {
+        alert("Erro ao conectar com o servidor");
+        console.log(erro);
+    }
+}
+
+// ===== CADASTRO =====
+async function cadastrar(){
+
+    const nome = document.getElementById("nomeCadastro").value;
+    const email = document.getElementById("emailCadastro").value;
+    const usuario = document.getElementById("usuarioCadastro").value;
+    const senha = document.getElementById("senhaCadastro").value;
+
+    const resposta = await fetch("http://127.0.0.1:5000/cadastro", {
+        method: "POST",
+        headers: {
+            "Content-Type":"application/json"
+        },
+        body: JSON.stringify({ nome, email, usuario, senha })
+    });
+
+    const dados = await resposta.json();
+
+    alert(dados.mensagem);
+}
+
+// ===== TROCAR FORMULÁRIO =====
+function trocarFormulario(){
+    document.getElementById("login").classList.toggle("ativo");
+    document.getElementById("cadastro").classList.toggle("ativo");
+}
+
+// ===== MOSTRAR SENHA =====
+function mostrarSenha(id, botao){
+
+    let campo = document.getElementById(id);
+
+    if(campo.type === "password"){
+        campo.type = "text";
+        botao.innerText = "Ocultar";
+    }else{
+        campo.type = "password";
+        botao.innerText = "Ver";
+    }
+}
+
+</script>
+
+</body>
+</html>

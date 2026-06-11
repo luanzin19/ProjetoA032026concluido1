@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Histórico de Consultas</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="topbar">
+    <div>🩺 Histórico de Consultas</div>
+    <a href="painel.html">← Voltar</a>
+</div>
+
+<div class="container">
+
+    <h1>Histórico de Consultas</h1>
+    <div id="lista"></div>
+
+</div>
+
+<script>
+
+let dados = JSON.parse(localStorage.getItem("historico_consultas")) || [];
+
+function render(){
+
+    const lista = document.getElementById("lista");
+    lista.innerHTML = "";
+
+    if(dados.length === 0){
+        lista.innerHTML = "<div class='card'>Nenhum histórico encontrado</div>";
+        return;
+    }
+
+    dados.reverse().forEach(d => {
+
+        lista.innerHTML += `
+            <div class="card">
+                <strong>${d.acao.toUpperCase()}</strong><br><br>
+                🩺 ${d.dados.medico || "-"}<br>
+                📅 ${d.dados.data || "-"}<br>
+                ⏰ ${d.dados.hora || "-"}<br><br>
+                🕒 ${d.data}
+            </div>
+        `;
+    });
+}
+
+render();
+
+</script>
+
+</body>
+</html>

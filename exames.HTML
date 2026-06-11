@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Exames</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="topbar">
+    <div>🧪 Sistema Médico</div>
+    <a href="painel.html">← Voltar</a>
+</div>
+
+<div class="container">
+
+    <h1>Exames</h1>
+
+    <p>Cadastro de exames médicos</p>
+
+    <input type="text" id="nome" placeholder="Nome do exame">
+    <input type="date" id="data">
+    <input type="text" id="resultado" placeholder="Resultado do exame">
+
+    <button onclick="adicionar()">Salvar Exame</button>
+
+    <div id="lista"></div>
+
+</div>
+
+<script>
+
+let exames = JSON.parse(localStorage.getItem("exames")) || [];
+
+function salvar(){
+    localStorage.setItem("exames", JSON.stringify(exames));
+}
+
+function adicionar(){
+
+    const nome = document.getElementById("nome").value;
+    const data = document.getElementById("data").value;
+    const resultado = document.getElementById("resultado").value;
+
+    if(!nome){
+        alert("Digite o nome do exame");
+        return;
+    }
+
+    const novo = {
+        id: Date.now(),
+        nome,
+        data,
+        resultado
+    };
+
+    exames.push(novo);
+    salvar();
+
+    salvarHistorico("exames", "criado", novo);
+
+    render();
+}
+function deletar(id){
+
+    let e = exames.find(x => x.id === id);
+
+    if(e){
+        salvarHistorico("exames", "excluido", e);
+    }
+
+    exames = exames.filter(x => x.id !== id);
+    salvar();
+    render();
+}
+function render(){
+
+    const lista = document.getElementById("lista");
+    lista.innerHTML = "";
+
+    if(exames.length === 0){
+        lista.innerHTML = "<div class='card'>Nenhum exame cadastrado</div>";
+        return;
+    }
+
+    exames.forEach(e => {
+
+        lista.innerHTML += `
+            <div class="card">
+                <strong>🧪 ${e.nome}</strong><br>
+                📅 ${e.data || "sem data"}<br>
+                📊 ${e.resultado || "sem resultado"}<br><br>
+
+                <button onclick="deletar(${e.id})"
+                    style="
+                        background:red;
+                        width:100%;
+                        padding:8px;
+                        border:none;
+                        color:white;
+                        border-radius:8px;
+                        cursor:pointer;
+                    ">
+                    Excluir
+                </button>
+            </div>
+        `;
+    });
+}
+
+render();
+function salvarHistorico(tipo, acao, dados){
+
+    let chave = "historico_" + tipo;
+
+    let historico = JSON.parse(localStorage.getItem(chave)) || [];
+
+    historico.push({
+        id: Date.now(),
+        acao: acao, 
+        dados: dados,
+        data: new Date().toLocaleString()
+    });
+
+    localStorage.setItem(chave, JSON.stringify(historico));
+}
+</script>
+
+</body>
+</html>

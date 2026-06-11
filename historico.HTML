@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Histórico Médico</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="topbar">
+    <div>📊 Sistema Médico</div>
+    <a href="painel.html">← Voltar</a>
+</div>
+
+<div class="container">
+
+    <h1>Histórico Geral</h1>
+
+    <p>Registro de atividades médicas</p>
+
+    <!-- EXAMES -->
+    <div class="card">
+        <h3>📋 Exames</h3>
+        <div id="exames"></div>
+    </div>
+
+    <!-- CONSULTAS -->
+    <div class="card">
+        <h3>🩺 Consultas</h3>
+        <div id="consultas"></div>
+    </div>
+
+    <!-- LEMBRETES -->
+    <div class="card">
+        <h3>⏰ Lembretes</h3>
+        <div id="lembretes"></div>
+    </div>
+
+</div>
+<div class="grid">
+
+    <a href="historico-exames.html" class="card-link">
+        🧪 Exames
+    </a>
+
+    <a href="historico-consultas.html" class="card-link">
+        🩺 Consultas
+    </a>
+
+    <a href="historico-lembretes.html" class="card-link">
+        ⏰ Lembretes
+    </a>
+
+</div>
+<script>
+function carregar(){
+
+    // ===== EXAMES =====
+    const exames = JSON.parse(localStorage.getItem("exames")) || [];
+
+    document.getElementById("exames").innerHTML =
+        exames.length ? exames.map(e => `
+            <div class="card">
+                📌 ${e.nome || "-"} <br>
+                📅 ${e.data || "-"} <br>
+                🧪 ${e.resultado || "-"}
+            </div>
+        `).join("") : "Nenhum exame registrado";
+
+    // ===== CONSULTAS =====
+    const consultas = JSON.parse(localStorage.getItem("consultas")) || [];
+
+    document.getElementById("consultas").innerHTML =
+        consultas.length ? consultas.map(c => `
+            <div class="card">
+                🩺 ${c.medico || "-"} <br>
+                📅 ${c.data || "-"} ⏰ ${c.hora || "-"}
+            </div>
+        `).join("") : "Nenhuma consulta registrada";
+
+    // ===== LEMBRETES =====
+    const lembretes = JSON.parse(localStorage.getItem("lembretes")) || [];
+
+    document.getElementById("lembretes").innerHTML =
+        lembretes.length ? lembretes.map(l => `
+            <div class="card">
+                ⏰ ${l.texto || "-"} <br>
+                📅 ${l.data || "-"} ⏰ ${l.hora || "-"}
+            </div>
+        `).join("") : "Nenhum lembrete registrado";
+}
+
+carregar();
+</script>
+
+</body>
+</html>
